@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: demo
+  data:
+    solr:
+      host: http://localhost:8983/solr
+      repositories:
+        enabled: true
+  server:
+    port: 8080
+  logging:
+    level:
+      org.springframework.boot.autoconfigure: DEBUG
+      org.apache.solr: DEBUG
+  # If not using SSL, you can exclude SSL-related configurations
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration
