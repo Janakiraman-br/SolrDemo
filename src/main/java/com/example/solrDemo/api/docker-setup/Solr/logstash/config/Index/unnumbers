@@ -1,0 +1,29 @@
+PUT /unnumber
+{
+"settings": {
+  "analysis": {
+    "normalizer": {
+      "custom_normalizer": {
+        "type": "custom",
+        "char_filter": [],
+        "filter": ["lowercase", "asciifolding"]
+      }
+    }
+  }
+  },
+  "mappings": {
+    "properties": {
+      "code": {
+      "type": "keyword",
+      "normalizer": "custom_normalizer"
+      },
+      "name": {
+       "type": "keyword",
+       "normalizer": "custom_normalizer"
+       },
+      "is_group": { "type": "boolean" },
+      "id": { "type": "long" }
+
+    }
+  }
+}
