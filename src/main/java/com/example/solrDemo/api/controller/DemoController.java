@@ -1,6 +1,7 @@
 package com.example.solrDemo.api.controller;
 
 
+import com.example.solrDemo.api.dto.UnNumberDto;
 import com.example.solrDemo.api.models.UnNumber;
 import com.example.solrDemo.api.repository.UnNumberRepository;
 import com.example.solrDemo.api.service.DemoService;
@@ -26,12 +27,17 @@ public class DemoController {
 
 
     @GetMapping("/getAll/{name}")
-    public List<UnNumber> getUnNumbers(@PathVariable String name) throws Exception
+    public List<UnNumberDto> getUnNumbers(@PathVariable String name) throws Exception
     {
       return demoService.getUnNumber(name);
     }
+    @GetMapping("/getAll/all/{name}")
+    public List<UnNumberDto> getUnNumbersAll(@PathVariable String name) throws Exception
+    {
+        return demoService.getAllUnNumber(name);
+    }
     @GetMapping("/getAll")
-    public Iterable<UnNumber> getAllUnNumbers() throws Exception {
+    public List<UnNumberDto> getAllUnNumbers() throws Exception {
         return demoService.getAllUnNumbers();
     }
 

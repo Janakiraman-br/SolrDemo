@@ -1,5 +1,6 @@
 package com.example.solrDemo.api.service;
 
+import com.example.solrDemo.api.dto.UnNumberDto;
 import com.example.solrDemo.api.models.UnNumber;
 import com.example.solrDemo.api.repository.UnNumberRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import javax.swing.event.ListDataEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -33,35 +35,53 @@ public class DemoService {
 
 
 
-public Iterable<UnNumber> getAllUnNumbers() throws Exception {
+public List<UnNumberDto> getAllUnNumbers() throws Exception {
     SolrQuery query = new SolrQuery("*:*");
     query.setRows(10);
 
     QueryResponse response = solrClient.query(query);
     System.out.println(response);
-
-//    List<UnNumber> unNumberList=new ArrayList<>();
-//    for (SolrDocument result : response.getResults()) {
-//        UnNumber unNumber= UnNumber.builder()
-//                .id(result.getFieldValue("id").toString())
-//                .name(result.getFieldValue("name").toString())
-//                .code(result.getFieldValue("code").toString())
-//                //.isGroup(result.getFieldValue("is_group").)
-//                .build();
-//        unNumberList.add(unNumber);
-//    }
-
-    return response.getBeans(UnNumber.class);
+    
+    return response.getBeans(UnNumber.class).stream()
+            .map(unNumber -> UnNumberDto.builder()
+                    .id(unNumber.getId())
+                    .name(unNumber.getName())
+                    .code(unNumber.getCode())
+                    .isGroup(unNumber.getIsGroup())
+                    .build()).collect(Collectors.toList());
 }
 
 
-    public List<UnNumber> getUnNumber(String name) throws Exception {
+    public List<UnNumberDto> getUnNumber(String name) throws Exception {
         SolrQuery query = new SolrQuery();
         query.setQuery("name:" + name);
         query.setRows(10);
 
         QueryResponse response = solrClient.query(query);
         System.out.println(response);
-        return response.getBeans(UnNumber.class);
+        return response.getBeans(UnNumber.class).stream()
+                .map(unNumber -> UnNumberDto.builder()
+                        .id(unNumber.getId())
+                        .name(unNumber.getName())
+                        .code(unNumber.getCode())
+                        .isGroup(unNumber.getIsGroup())
+                        .build()).collect(Collectors.toList());
+}
+
+    public List<UnNumberDto> getAllUnNumber(String name) throws Exception {
+        SolrQuery query = new SolrQuery();
+        query.setQuery("name:*" + name + "*");
+        query.setRows(10);
+
+        QueryResponse response = solrClient.query(query);
+        System.out.println(response);
+
+        return response.getBeans(UnNumber.class).stream()
+                .map(unNumber -> UnNumberDto.builder()
+                        .id(unNumber.getId())
+                        .name(unNumber.getName())
+                        .code(unNumber.getCode())
+                        .isGroup(unNumber.getIsGroup())
+                        .build()).collect(Collectors.toList());
     }
 }

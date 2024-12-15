@@ -12,7 +12,7 @@ public class SolrConfig {
     @Bean
     public SolrClient solrClient() {
         // Replace with your actual Solr server URL
-        String solrUrl = "http://localhost:8983/solr/unnumber";
+        String solrUrl = "http://localhost:8983/solr/unnumbers";
         return new HttpSolrClient.Builder(solrUrl).build();
     }
 }
