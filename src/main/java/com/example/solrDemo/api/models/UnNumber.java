@@ -17,13 +17,13 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
 @SolrDocument(collection = "unnumber")
 public class UnNumber {
     @Id
-    @Field
+    @Field(value = "id")
     private String id;
-    @Field
+    @Field(value = "name")
     private String name;
-    @Field
+    @Field(value = "code")
     private String code;
-    @Field
+    @Field(value = "is_group")
     private Boolean isGroup;
 
 }

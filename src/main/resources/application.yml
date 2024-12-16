@@ -2,6 +2,17 @@ spring:
   application:
     name: demo
   data:
+    postgresql:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://localhost:5432/your_database_name
+      username: your_username
+      password: "no4jLYr3QKkSUlez3mTpF\"b\"5ImCrpTF"
+    jpa:
+      hibernate:
+        ddl-auto: update # Adjust based on your schema management preferences
+      show-sql: true
+      properties:
+        hibernate.format_sql: true
     solr:
       host: http://localhost:8983/solr
       repositories:
@@ -10,8 +21,15 @@ spring:
     port: 8080
   logging:
     level:
+      root: INFO
       org.springframework.boot.autoconfigure: DEBUG
       org.apache.solr: DEBUG
-  # If not using SSL, you can exclude SSL-related configurations
+    file:
+      path: /var/log/demo/ # Ensure the application has write permissions
+    logstash:
+      enabled: true
+      appender-name: LOGSTASH
+      host: 127.0.0.1 # Logstash host
+      port: 5000      # Port Logstash listens on for TCP/UDP
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration
