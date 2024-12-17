@@ -2,17 +2,13 @@ package com.example.solrDemo.api.controller;
 
 
 import com.example.solrDemo.api.dto.UnNumberDto;
-import com.example.solrDemo.api.models.UnNumber;
-import com.example.solrDemo.api.repository.UnNumberRepository;
 import com.example.solrDemo.api.service.DemoService;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
+import com.example.solrDemo.api.service.SolrDIHService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,9 +16,11 @@ public class DemoController {
 
 
     private final DemoService demoService;
+    private final SolrDIHService solrDIHService;
 
-    public DemoController(DemoService demoService) {
+    public DemoController(DemoService demoService, SolrDIHService solrDIHService) {
         this.demoService = demoService;
+        this.solrDIHService = solrDIHService;
     }
 
 
@@ -39,6 +37,12 @@ public class DemoController {
     @GetMapping("/getAll")
     public List<UnNumberDto> getAllUnNumbers() throws Exception {
         return demoService.getAllUnNumbers();
+    }
+
+    @GetMapping("/trigger")
+    public ResponseEntity<String> triggerDIH() {
+        String response = solrDIHService.triggerFullImport();
+        return ResponseEntity.ok(response);
     }
 
 }

@@ -1,35 +1,29 @@
 spring:
   application:
     name: demo
+
+  # PostgreSQL Configuration
+  datasource:
+    url: jdbc:postgresql://weucathsursqlf03.postgres.database.azure.com:5432/ocean_surcharge?currentSchema=public
+    username: psqladmin
+    password: no4jLYr3QKkSUlez3mTpF"b"5ImCrpTF
+    hikari:
+      max-lifetime: 2000000
+    driver-class-name: org.postgresql.Driver
+
+  # JPA Configuration for PostgreSQL
+  # Solr Configuration
   data:
-    postgresql:
-      driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost:5432/your_database_name
-      username: your_username
-      password: "no4jLYr3QKkSUlez3mTpF\"b\"5ImCrpTF"
+    solr:
+      host: http://localhost:8983/solr  # Solr server URL
     jpa:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
       hibernate:
-        ddl-auto: update # Adjust based on your schema management preferences
-      show-sql: true
+        ddl-auto: update       # Auto-create or update database schema (use 'none' for production)
+      show-sql: true           # Show SQL queries in the logs
       properties:
         hibernate.format_sql: true
-    solr:
-      host: http://localhost:8983/solr
-      repositories:
-        enabled: true
-  server:
-    port: 8080
-  logging:
-    level:
-      root: INFO
-      org.springframework.boot.autoconfigure: DEBUG
-      org.apache.solr: DEBUG
-    file:
-      path: /var/log/demo/ # Ensure the application has write permissions
-    logstash:
-      enabled: true
-      appender-name: LOGSTASH
-      host: 127.0.0.1 # Logstash host
-      port: 5000      # Port Logstash listens on for TCP/UDP
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration
+        hibernate.transaction.coordinator_class: org.hibernate.transaction.JDBCTransactionFactory
+
+server:
+  port: 8080  # Spring Boot server port

@@ -14,7 +14,7 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@SolrDocument(collection = "unnumber")
+@SolrDocument(collection = "unnumbers")
 public class UnNumber {
     @Id
     @Field(value = "id")
