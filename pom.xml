@@ -56,7 +56,16 @@
             <artifactId>postgresql</artifactId>
             <version>42.6.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>8.11.2</version> <!-- Match your Solr version -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-dataimporthandler</artifactId>
+            <version>8.11.4</version>
+        </dependency>
         <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

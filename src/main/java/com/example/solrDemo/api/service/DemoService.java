@@ -6,18 +6,33 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.apache.solr.common.util.NamedList;
+import org.apache.solr.request.SolrQueryRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+
 public class DemoService {
 
     private final SolrClient solrClient;
+    private static final String SOLR_URL = "http://localhost:8983/solr";  // Update with your Solr URL
+    private final RestTemplate restTemplate;
+
+    public DemoService(SolrClient solrClient, RestTemplate restTemplate) {
+        this.solrClient = solrClient;
+        this.restTemplate = restTemplate;
+    }
 
 
     public List<UnNumberDto> getAllUnNumbers() throws Exception {
@@ -70,4 +85,18 @@ public class DemoService {
                         .isGroup(unNumber.getIsGroup())
                         .build()).collect(Collectors.toList());
     }
+
+    public String triggerFullImport(String coreName) throws Exception {
+        String url = SOLR_URL + "/" + coreName + "/dataimport?command=full-import";
+
+        try {
+
+            return restTemplate.getForObject(url, String.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Failed to trigger full import: " + e.getMessage());
+        }
+    }
+
 }

@@ -1,6 +1,18 @@
 spring:
   application:
     name: demo
+
+  # PostgreSQL Configuration
+  datasource:
+    url: jdbc:postgresql://weucathsursqlf03.postgres.database.azure.com:5432/ocean_surcharge?currentSchema=public
+    username: psqladmin
+    password: no4jLYr3QKkSUlez3mTpF"b"5ImCrpTF
+    hikari:
+      max-lifetime: 2000000
+    driver-class-name: org.postgresql.Driver
+
+  # JPA Configuration for PostgreSQL
+  # Solr Configuration
   data:
     postgresql:
       driver-class-name: org.postgresql.Driver

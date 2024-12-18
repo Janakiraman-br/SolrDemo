@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -40,5 +41,14 @@ public class DemoController {
     public List<UnNumberDto> getAllUnNumbers() throws Exception {
         return demoService.getAllUnNumbers();
     }
+    @GetMapping("/solr/full-import")
+    public String triggerFullImport() {
+        try {
+            return demoService.triggerFullImport("unnumbers");
+        } catch (Exception e) {
+            return "Error triggering full-import: " + e.getMessage();
+        }
+    }
+
 
 }
