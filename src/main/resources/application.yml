@@ -14,8 +14,8 @@ spring:
   # JPA Configuration for PostgreSQL
   # Solr Configuration
   data:
-    solr:
-      host: http://localhost:8983/solr  # Solr server URL
+#    solr:
+#      host: "https://athena-solr-cdt.maersk-digital.net"  # Solr server URL
     jpa:
       database-platform: org.hibernate.dialect.PostgreSQLDialect
       hibernate:

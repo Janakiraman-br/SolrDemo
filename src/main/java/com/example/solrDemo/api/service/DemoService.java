@@ -22,8 +22,8 @@ public class DemoService {
 
     public List<UnNumberDto> getAllUnNumbers() throws Exception {
         SolrQuery query = new SolrQuery("*:*");
+        query.setStart(20);
         query.setRows(10);
-
         QueryResponse response = solrClient.query(query);
         log.info(String.valueOf(response));
 
@@ -40,6 +40,7 @@ public class DemoService {
     public List<UnNumberDto> getUnNumber(String name) throws Exception {
         SolrQuery query = new SolrQuery();
         query.setQuery("name:" + name);
+
         query.setRows(10);
 
         QueryResponse response = solrClient.query(query);
@@ -54,10 +55,18 @@ public class DemoService {
                         .build()).collect(Collectors.toList());
 }
 
-    public List<UnNumberDto> getAllUnNumber(String name) throws Exception {
+    public List<UnNumberDto> getAllUnNumber(String field,String value,String sortField,String order) throws Exception {
         SolrQuery query = new SolrQuery();
-        query.setQuery("name:*" + name + "*");
-        query.setRows(10);
+        query.setQuery(field + ":*" + value + "*");
+        query.setRows(2300);
+        if (order.equalsIgnoreCase("asc"))
+        {
+            query.setSort(sortField, SolrQuery.ORDER.asc);
+        }
+        else
+        {
+            query.setSort(sortField, SolrQuery.ORDER.desc);
+        }
 
         QueryResponse response = solrClient.query(query);
         log.info(String.valueOf(response));
