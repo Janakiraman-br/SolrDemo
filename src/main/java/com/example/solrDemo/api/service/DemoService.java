@@ -1,5 +1,6 @@
 package com.example.solrDemo.api.service;
 
+import com.example.solrDemo.api.config.SolrConfig;
 import com.example.solrDemo.api.dto.UnNumberDto;
 import com.example.solrDemo.api.models.UnNumber;
 import lombok.AllArgsConstructor;
@@ -17,10 +18,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DemoService {
 
-    private final SolrClient solrClient;
-
+    private final SolrConfig solrConfig;
 
     public List<UnNumberDto> getAllUnNumbers() throws Exception {
+        SolrClient solrClient = solrConfig.getSolrClient("commodity");
+
         SolrQuery query = new SolrQuery("*:*");
         query.setStart(20);
         query.setRows(10);
@@ -38,6 +40,7 @@ public class DemoService {
 
 
     public List<UnNumberDto> getUnNumber(String name) throws Exception {
+        SolrClient solrClient = solrConfig.getSolrClient("commodity");
         SolrQuery query = new SolrQuery();
         query.setQuery("name:" + name);
 
@@ -55,7 +58,9 @@ public class DemoService {
                         .build()).collect(Collectors.toList());
 }
 
+
     public List<UnNumberDto> getAllUnNumber(String field,String value,String sortField,String order) throws Exception {
+        SolrClient solrClient = solrConfig.getSolrClient("commodity");
         SolrQuery query = new SolrQuery();
         query.setQuery(field + ":*" + value + "*");
         query.setRows(2300);

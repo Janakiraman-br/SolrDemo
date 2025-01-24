@@ -15,7 +15,8 @@ spring:
   # Solr Configuration
   data:
 #    solr:
-#      host: "https://athena-solr-cdt.maersk-digital.net"  # Solr server URL
+#      base-url: https://athena-solr-cdt.maersk-digital.net/solr
+#      core-name: unnumbers
     jpa:
       database-platform: org.hibernate.dialect.PostgreSQLDialect
       hibernate:
